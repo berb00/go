@@ -20,11 +20,11 @@ func baseType () {
     var b bool			// 布尔类型默认false
 	var s string		// 字符串默认''
 	
-	var b1 = true		// 不指定数据类型(自动判断)
+	// var b1 = true		// 不指定数据类型(自动判断)
 
-	intVal,intVal1 := 1,2 // := 声明新的变量
-	f := "Runoob"
-	var intVal int 
-	intVal :=1 // 这时候会产生编译错误
+	// intVal,intVal1 := 1,2 // := 声明新的变量
+	// f := "Runoob"
+	// var intVal int 
+	// intVal :=1 // 这时候会产生编译错误
     fmt.Printf("%v %v %v %q\n", i, f, b, s)
 }
