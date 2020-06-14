@@ -22,8 +22,6 @@ import (
 	string		""、`` 		不能使用''
 派生类型
 
-bool
-
 
 
 
@@ -44,7 +42,14 @@ func VarDefault  () {	// 模块中要导出的函数，必须首字母大写
 	
 }
 func VarString  () {	// 模块中要导出的函数，必须首字母大写
-	
+	var str1 string = "sss"	// 单个声明
+	var (					// 批量声明
+		str2 string = "str2"
+		str3 string = "str3"
+	)
+
+	fmt.Println(str1, str2, str3)
+
 }
 
 func VarInt ()  {
