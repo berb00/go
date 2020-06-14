@@ -6,10 +6,10 @@ import (
 /*
 变量声明
 
-布尔型
-	bool
+布尔类型
+	bool	只有 true 和 false，默认为 false。
 数字类型
-	int
+	int							默认 0
 		int8 	uint8
 		int16 	uint16
 		int32 	uint32
@@ -24,46 +24,38 @@ import (
 
 bool
 
-只有 true 和 false，默认为 false。
+
 
 
 */
 
+func VarDefault  () {	// 模块中要导出的函数，必须首字母大写
+	var strdefault string			// string 默认值
+	fmt.Println("string default:	", strdefault)
 
-var aaa string = "s"
-var bbb string = "dsa"
+	var intdefault int			// string 默认值
+	fmt.Println("int default:		", intdefault)
 
+	var float32default float32		// float32 默认值
+	fmt.Println("float32 default:	", float32default)
 
-func var_string ()  {
-	var a string = "Runoob"
-    fmt.Println(a)
-}
-
-func var_int ()  {
-	var a string = "Runoob"
-    fmt.Println(a)
-}
-func var_float ()  {
-	var a string = "Runoob"
-    fmt.Println(a)
-}
-func var_bool ()  {
-	var a string = "Runoob"
-    fmt.Println(a)
-}
-
-func baseType () {
-	// 指定变量类型但不初始化
-	var i int			// 数值类型默认0
-    var f float64
-    var b bool			// 布尔类型默认false
-	var s string		// 字符串默认''
+	var booldefault bool			// bool 默认值
+	fmt.Println("bool default:		", booldefault)
 	
-	var b1 = true		// 不指定数据类型(自动判断)
-
-	intVal,intVal1 := 1,2 // := 声明新的变量
-	// f := "Runoob"
-	// var intVal int
-	// intVal :=1 // 这时候会产生编译错误
-    fmt.Printf("%v %v %v %q\n", i, f, b, s)
 }
+func VarString  () {	// 模块中要导出的函数，必须首字母大写
+	
+}
+
+func VarInt ()  {
+
+}
+func VarFloat ()  {
+	// var a float32 = 3.22
+    // fmt.Println(a)
+}
+func VarBool ()  {
+	// var a bool = false
+    // fmt.Println(a)
+}
+
