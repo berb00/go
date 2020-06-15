@@ -3,11 +3,9 @@
 package main
 
 // 引入包
-import (
-	"./base" // base 目录
-	"./math" // math 目录
-	"fmt"    // 格式化 IO（输入/输出）
-)
+import "./base" // base 目录
+// import "./math" // math 目录
+// import "fmt"    // 格式化 IO（输入/输出）
 
 // 初始化函数，若存在会在main函数之前执行
 func init() {
@@ -17,7 +15,7 @@ func init() {
 // 入口函数 自动调用
 func main() { // { 不能另起一行
 	// math
-	fmt.Println(math.Add(1, 1))
+	// fmt.Println(math.Add(1, 1))
 	// fmt.Println(math.Sub(1,1))
 
 	// var
@@ -30,5 +28,6 @@ func main() { // { 不能另起一行
 
 	// slice
 	base.DefSlice()
+	base.Slice()
 
 }
