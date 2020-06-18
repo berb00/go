@@ -5,5 +5,6 @@ node_modules
 npm-debug.log
 .jshintrc
 .vs/
-.exe
+*.exe
 index
+main
