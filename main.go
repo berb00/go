@@ -31,7 +31,7 @@ func main() { // { 不能另起一行
 	// base.Printf()
 
 	// slice
-	base.DefSlice()
-	base.Slice()
-
+	// base.DefSlice()
+	// base.Slice()
+	base.DefMap()
 }
