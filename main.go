@@ -4,8 +4,10 @@ package main
 
 import (
 	"Go/base"
-	"Go/math"
-	"fmt"
+	_ "Go/math"
+	_ "fmt"
+	// _ "fmt"		// _指匿名包
+	// F "fmt"		// 给包起别名为
 )
 
 // 初始化函数，若存在会在main函数之前执行
@@ -19,8 +21,8 @@ func main() { // { 不能另起一行
 	// fmt.Println("外部包测试：", configor.Config{})
 
 	// math
-	fmt.Println(math.Add(1, 1))
-	fmt.Println(math.Sub(1, 1))
+	// fmt.Println(math.Add(1, 1))
+	// fmt.Println(math.Sub(1, 1))
 
 	// var
 	// base.VarDefault()
@@ -33,5 +35,12 @@ func main() { // { 不能另起一行
 	// slice
 	// base.DefSlice()
 	// base.Slice()
-	base.DefMap()
+	// base.DefMap()
+
+	// fmt
+	// base.Print()
+
+	// struct
+	// base.InitStruct()
+	base.TestStructFunc()
 }
