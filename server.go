@@ -8,7 +8,8 @@ import (
 	_ "io"
 	"log"
 	"math"
-	    "encoding/binary"
+	"encoding/binary"
+	"time"
 )
 
 type numbers struct {
@@ -84,10 +85,11 @@ func fileHandle (numsdata numbers) {
 	defer file.Close()
 
 	//写字节到文件中
-
-
+    t := time.Now().Format("2006-01-02 15:04:05")
+	fmt.Printf(numsdata.Num1)
+	fmt.Printf(numsdata.Num2)
 	// bytesWritten, err := file.Write(Float64ToByte(numsdata.Num1))
-	byteSlice := []byte(numsdata.Num1 + "," + numsdata.Num2 + "\n")
+	byteSlice := []byte(t + "    " + numsdata.Num1 + "," + numsdata.Num2 + "\n")
 	bytesWritten, err := file.Write(byteSlice)
 
 	checkErr(err)
