@@ -55,14 +55,14 @@ func TestStructFunc() {
 
 // 初始化结构体
 func InitStruct() {
-	// 方式一：
+	// 方式一：基本的实例化形式
 	var p1 Person
 	p1.Name = "张三"
 	p1.sex = "男"
 	p1.age = 20
 	fmt.Printf("p1:	%#v %T\n", p1, p1) // base.Person
 
-	// 方式二：
+	// 方式二：创建指针类型的结构体
 	var p2 = new(Person)
 	p2.Name = "李四"
 	p2.sex = "男"
@@ -70,7 +70,7 @@ func InitStruct() {
 	(*p2).age = 25                     // 使用指针改变属性值
 	fmt.Printf("p2:	%#v %T\n", p2, p2) // *base.Person
 
-	// 方式三：
+	// 方式三：取结构体的地址实例化(对结构体进行&取地址操作时，视为对该类型进行一次 new 的实例化操作)
 	var p3 = &Person{}
 	p3.Name = "王五"
 	p3.sex = "女"
