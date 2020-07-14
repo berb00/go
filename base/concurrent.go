@@ -5,8 +5,6 @@ import (
 	"time"
 )
 
-
-
 func say(s string) {
 	for i := 0; i < 5; i++ {
 		time.Sleep(100 * time.Millisecond)
@@ -14,24 +12,23 @@ func say(s string) {
 	}
 }
 
-func Demo1() {  // 输出的 hello 和 world 是没有固定先后顺序。因为它们是两个 goroutine 在执行
+func Demo1() { // 输出的 hello 和 world 是没有固定先后顺序。因为它们是两个 goroutine 在执行
 	go say("world")
 	say("hello")
 }
 
-
 func sum(s []int, c chan int) {
 	sum := 0
 	for _, v := range s {
-			sum += v
+		sum += v
 	}
 	c <- sum // 把 sum 发送到通道 c
 }
 
 func Demo2() { // 通道channel
 	/*
-	通道（channel）是用来传递数据的一个数据结构。
-	通道可用于两个 goroutine 之间通过传递一个指定类型的值来同步运行和通讯。操作符 <- 用于指定通道的方向，发送或接收。如果未指定方向，则为双向通道
+		通道（channel）是用来传递数据的一个数据结构。
+		通道可用于两个 goroutine 之间通过传递一个指定类型的值来同步运行和通讯。操作符 <- 用于指定通道的方向，发送或接收。如果未指定方向，则为双向通道
 	*/
 	s := []int{7, 2, 8, -9, 4, 0}
 
@@ -43,8 +40,7 @@ func Demo2() { // 通道channel
 	fmt.Println(x, y, x+y)
 }
 
-
-func Demo3 ()  {	// 通道缓冲区
+func Demo3() { // 通道缓冲区
 	// 这里我们定义了一个可以存储整数类型的带缓冲通道
 	// 缓冲区大小为2
 	ch := make(chan int, 2)
@@ -59,26 +55,23 @@ func Demo3 ()  {	// 通道缓冲区
 	fmt.Println(<-ch)
 }
 
-
-
-
 func fibonacci(n int, c chan int) {
 	x, y := 0, 1
 	for i := 0; i < n; i++ {
-			c <- x
-			x, y = y, x+y
+		c <- x
+		x, y = y, x+y
 	}
 	close(c)
 }
 
 func Demo4() { // Go 遍历通道与关闭通道
 	/*
-	
 
-	Go 通过 range 关键字来实现遍历读取到的数据，类似于与数组或切片。格式如下：
-	v, ok := <-ch
 
-	如果通道接收不到数据后 ok 就为 false，这时通道就可以使用 close() 函数来关闭。
+		Go 通过 range 关键字来实现遍历读取到的数据，类似于与数组或切片。格式如下：
+		v, ok := <-ch
+
+		如果通道接收不到数据后 ok 就为 false，这时通道就可以使用 close() 函数来关闭。
 	*/
 	c := make(chan int, 10)
 	go fibonacci(cap(c), c)
@@ -87,6 +80,6 @@ func Demo4() { // Go 遍历通道与关闭通道
 	// 之后就结束了。如果上面的 c 通道不关闭，那么 range 函数就不
 	// 会结束，从而在接收第 11 个数据的时候就阻塞了。
 	for i := range c {
-			fmt.Println(i)
+		fmt.Println(i)
 	}
 }

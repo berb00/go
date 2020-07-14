@@ -32,7 +32,7 @@ import (
 	bool		false
 	array		nil
 	struct
-引用类型:
+引用类型:	make()可以给引用类型申请内存空间
 	slice		nil
 	function	nil
 	map			nil

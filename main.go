@@ -9,5 +9,10 @@ func main() {
 	// base.Listener()
 
 	// base.interface
-	base.DefInterface()
+	// base.DefInterface()
+
+	// array
+	base.DefineUnidimensionalArray()
+	base.DefinedMultidimensionedArray()
+
 }
