@@ -9,7 +9,7 @@ import (
 )
 
 
-func ServerHttp() {
+func HttpServer() {
 	http.HandleFunc("/post", receiveClientRequest)
 	err := http.ListenAndServe(":9090", nil)
 	if err != nil {

@@ -36,7 +36,7 @@ func mysqlModule () {
 }
 
 func serverModule()  {
-	server.TestPost()
+	server.HttpServer()
 }
 
 func main() {
