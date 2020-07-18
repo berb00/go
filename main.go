@@ -7,7 +7,6 @@ import (
 )
 
 func baseModule()  {
-
 	// base.interface
 	// base.DefInterface()
 

@@ -2,46 +2,24 @@ package server
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	_ "strings"
 	"encoding/json"
 )
 
-
-func HttpServer() {
-	http.HandleFunc("/post", receiveClientRequest)
-	err := http.ListenAndServe(":9090", nil)
-	if err != nil {
-		fmt.Printf("http server failed, err:%v\n", err)
-		return
-	}
-}
-
-func receiveClientRequest(w http.ResponseWriter, r *http.Request) {
-
-    w.Header().Set("Access-Control-Allow-Origin", "*")             //允许访问所有域
-    w.Header().Add("Access-Control-Allow-Headers", "Content-Type") //header的类型
-    w.Header().Set("content-type", "application/json")             //返回数据格式是json
-
-    // r.ParseForm()
-	// fmt.Println("收到客户端请求: ", r.Form)
-	fmt.Fprintln(w, "Hello 沙河！")
-}
-
-
 func cors(f http.HandlerFunc) http.HandlerFunc {
-	fmt.Printf("dsada")
     return func(w http.ResponseWriter, r *http.Request) {
         w.Header().Set("Access-Control-Allow-Origin", "*")  // 允许访问所有域，可以换成具体url，注意仅具体url才能带cookie信息
         w.Header().Add("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token") //header的类型
         w.Header().Add("Access-Control-Allow-Credentials", "true") //设置为true，允许ajax异步请求带cookie信息
         w.Header().Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE") //允许请求方法
         w.Header().Set("content-type", "application/json;charset=UTF-8")             //返回数据格式是json
-        if r.Method == "POST" {
-            w.WriteHeader(http.StatusNoContent)
-            return
-        }
+        // if r.Method == "POST" {
+        //     w.WriteHeader(http.StatusNoContent)
+        //     return
+        // }
         f(w, r)
     }
 }
@@ -49,22 +27,82 @@ type User struct {
     Username string `json:"username"`
     Password  string  `json:"password"`
 }
+type Data struct{
+	Name string
+	Age int
+}
+type Ret struct{
+	Code int
+	Param string
+	Msg string
+	Data []Data
+}
+/*
+type Request struct {
+    Method string
+    URL *url.URL
+    Proto      string // "HTTP/1.0"
+    ProtoMajor int    // 1
+    ProtoMinor int    // 0
+    Header Header
+    Body io.ReadCloser
+    GetBody func() (io.ReadCloser, error)
+    ContentLength int64
+    TransferEncoding []string
+    Close bool
+    Host string
+    Form url.Values
+    PostForm url.Values
+    MultipartForm *multipart.Form
+    Trailer Header
+    RemoteAddr string
+    RequestURI string
+    TLS *tls.ConnectionState
+    Cancel <-chan struct{}
+    Response *Response
+    ctx context.Context
+}
+*/ 
+
+
 
 func index(w http.ResponseWriter, r *http.Request) {
-	body, _ := ioutil.ReadAll(r.Body)
-	fmt.Printf("AAA %v", r)
-    fmt.Println(string(body))
-    var user User
-    if err := json.Unmarshal(body, &user); err == nil {
-        fmt.Println(user)
-    } else {
-        fmt.Println(err)
-    }
-	w.Write([]byte("Hello Golang"))
-	fmt.Fprintln(w, "Hello 沙河！")
+	w.Header().Set("content-type","text/json")
+
+	fmt.Println("请求方法: 		", r.Method)
+	fmt.Println("请求主机: 		", r.Host)
+	fmt.Println("请求协议: 		", r.Proto)
+	fmt.Println("请求远程地址: 	 ", r.RemoteAddr)
+	fmt.Println("请求路由: 		", r.RequestURI)
+
+	// var user User
+	// decoder := json.NewDecoder(r.Body).Decode(&user)
+	// fmt.Println("请求参数: ", decoder, r.Body)
 	
+    body, _ := ioutil.ReadAll(r.Body)
+	r.Body.Close()
+	body_str := string(body)
+
+	var user User
+	json.Unmarshal([]byte(body_str), &user)
+	fmt.Printf("请求参数: %v", user.Password)
+
+	data := Data{Name: "why", Age: 18}
+	ret := new(Ret)
+	id := r.FormValue("id")
+	ret.Code = 0
+	ret.Param = id
+	ret.Msg = "success"
+	ret.Data = append(ret.Data, data)
+	ret.Data = append(ret.Data, data)
+	ret.Data = append(ret.Data, data)
+	ret_json,_ := json.Marshal(ret)
+	// fmt.Printf("---%v", string(ret_json))
+	io.WriteString(w, string(ret_json))
+
 }
-func ZTestPost() {
-    http.HandleFunc("/post", cors(index))
+func HttpServer() {
+	http.HandleFunc("/post", cors(index))
+	
     http.ListenAndServe(":9090", nil)
 }
