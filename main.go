@@ -7,8 +7,6 @@ import (
 )
 
 func baseModule()  {
-	// server
-	// base.Listener()
 
 	// base.interface
 	// base.DefInterface()
