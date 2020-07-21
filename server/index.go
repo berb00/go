@@ -7,6 +7,7 @@ import (
 	"net/http"
 	_ "strings"
 	"encoding/json"
+	"golang/mysql"
 )
 
 func cors(f http.HandlerFunc) http.HandlerFunc {
@@ -27,6 +28,12 @@ type User struct {
     Username string `json:"username"`
     Password  string  `json:"password"`
 }
+
+type UserInfo struct {
+    Name string `json:"name"`
+    Age  int  `json:"age"`
+}
+
 type Data struct{
 	Name string
 	Age int
@@ -83,11 +90,18 @@ func index(w http.ResponseWriter, r *http.Request) {
 	r.Body.Close()
 	body_str := string(body)
 
-	var user User
-	json.Unmarshal([]byte(body_str), &user)
-	fmt.Printf("请求参数: %v", user.Password)
+	// var user User
+	// json.Unmarshal([]byte(body_str), &user)
+	// fmt.Printf("请求参数: %v", user.Password)
 
-	data := Data{Name: "why", Age: 18}
+	var userInfo UserInfo
+	json.Unmarshal([]byte(body_str), &userInfo)
+	fmt.Printf("请求参数: %v-%v", userInfo.Age, userInfo.Name)
+
+	
+	mysql.InsertRowDemo(userInfo.Name, userInfo.Age)	// 向数据库插入前端传如数据
+
+	data := Data{Name: userInfo.Name, Age: userInfo.Age}
 	ret := new(Ret)
 	id := r.FormValue("id")
 	ret.Code = 0
@@ -97,7 +111,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 	ret.Data = append(ret.Data, data)
 	ret.Data = append(ret.Data, data)
 	ret_json,_ := json.Marshal(ret)
-	// fmt.Printf("---%v", string(ret_json))
 	io.WriteString(w, string(ret_json))
 
 }

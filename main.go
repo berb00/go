@@ -33,6 +33,7 @@ func mysqlModule () {
 }
 
 func serverModule()  {
+	mysql.LinkSQL()
 	server.HttpServer()
 }
 
