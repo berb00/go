@@ -6,7 +6,7 @@ import (
 	"golang/server"
 )
 
-func baseModule()  {
+func baseModule() {
 	// base.interface
 	// base.DefInterface()
 
@@ -14,11 +14,11 @@ func baseModule()  {
 	// base.DefineUnidimensionalArray()
 	// base.DefinedMultidimensionedArray()
 
-	// point 
+	// point
 	base.TestNew()
 }
 
-func mysqlModule () {
+func mysqlModule() {
 	mysql.LinkSQL()
 	// mysql.InsertRowDemo("里斯1", 23)
 	// mysql.InsertRowDemo("里斯2", 23)
@@ -28,11 +28,10 @@ func mysqlModule () {
 	// mysql.DeleteRowDemo(4)
 	// mysql.QueryRowDemo(2)
 	mysql.QueryMultiRowDemo()
-	
-	
+
 }
 
-func serverModule()  {
+func serverModule() {
 	mysql.LinkSQL()
 	server.HttpServer()
 }
@@ -42,4 +41,3 @@ func main() {
 	// mysqlModule()
 	serverModule()
 }
-

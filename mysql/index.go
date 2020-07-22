@@ -7,15 +7,15 @@ import (
 )
 
 func LinkSQL() {
-//    // DSN:Data Source Name
-// 	// dsn := "user:password@tcp(127.0.0.1:3306)/dbname"
-// 	dsn := "root:123456@tcp(127.0.0.1:3306)/testA"
-// 	db, err := sql.Open("mysql", dsn)
-// 	fmt.Println(db)
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	defer db.Close()  // 注意这行代码要写在上面err判断的下面
+	//    // DSN:Data Source Name
+	// 	// dsn := "user:password@tcp(127.0.0.1:3306)/dbname"
+	// 	dsn := "root:123456@tcp(127.0.0.1:3306)/testA"
+	// 	db, err := sql.Open("mysql", dsn)
+	// 	fmt.Println(db)
+	// 	if err != nil {
+	// 		panic(err)
+	// 	}
+	// 	defer db.Close()  // 注意这行代码要写在上面err判断的下面
 
 	err := initDB() // 调用输出化数据库的函数
 	if err != nil {
@@ -51,7 +51,6 @@ type user struct {
 	name string
 }
 
-
 /*
 单行查询
 单行查询db.QueryRow()执行一次查询，并期望返回最多一行结果（即Row）。QueryRow总是返回非nil的值，直到返回值的Scan方法被调用时，才会返回被延迟的错误。（如：未找到结果）
@@ -76,7 +75,7 @@ func QueryRowDemo(id int) {
 多行查询db.Query()执行一次查询，返回多行结果（即Rows），一般用于执行select命令。参数args表示query中的占位参数。
 
 func (db *DB) Query(query string, args ...interface{}) (*Rows, error)
-*/ 
+*/
 
 func QueryMultiRowDemo() {
 	sqlStr := "select id, name, age from user where id > ?"
@@ -108,7 +107,7 @@ func QueryMultiRowDemo() {
 func (db *DB) Exec(query string, args ...interface{}) (Result, error)
 
 Exec执行一次命令（包括查询、删除、更新、插入等），返回的Result是对已执行的SQL命令的总结。参数args表示query中的占位参数。
-*/ 
+*/
 func InsertRowDemo(name string, age int) {
 	sqlStr := "insert into user(name, age) values (?,?)"
 	ret, err := db.Exec(sqlStr, name, age)
@@ -123,7 +122,6 @@ func InsertRowDemo(name string, age int) {
 	}
 	fmt.Printf("insert success, the id is %d.\n", theID)
 }
-
 
 // 更新数据
 func UpdateRowDemo(age int, id int) {

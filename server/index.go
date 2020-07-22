@@ -1,49 +1,51 @@
 package server
 
 import (
+	"encoding/json"
 	"fmt"
+	"golang/mysql"
 	"io"
 	"io/ioutil"
 	"net/http"
 	_ "strings"
-	"encoding/json"
-	"golang/mysql"
 )
 
 func cors(f http.HandlerFunc) http.HandlerFunc {
-    return func(w http.ResponseWriter, r *http.Request) {
-        w.Header().Set("Access-Control-Allow-Origin", "*")  // 允许访问所有域，可以换成具体url，注意仅具体url才能带cookie信息
-        w.Header().Add("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token") //header的类型
-        w.Header().Add("Access-Control-Allow-Credentials", "true") //设置为true，允许ajax异步请求带cookie信息
-        w.Header().Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE") //允许请求方法
-        w.Header().Set("content-type", "application/json;charset=UTF-8")             //返回数据格式是json
-        // if r.Method == "POST" {
-        //     w.WriteHeader(http.StatusNoContent)
-        //     return
-        // }
-        f(w, r)
-    }
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")                                                            // 允许访问所有域，可以换成具体url，注意仅具体url才能带cookie信息
+		w.Header().Add("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token") //header的类型
+		w.Header().Add("Access-Control-Allow-Credentials", "true")                                                    //设置为true，允许ajax异步请求带cookie信息
+		w.Header().Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")                             //允许请求方法
+		w.Header().Set("content-type", "application/json;charset=UTF-8")                                              //返回数据格式是json
+		// if r.Method == "POST" {
+		//     w.WriteHeader(http.StatusNoContent)
+		//     return
+		// }
+		f(w, r)
+	}
 }
+
 type User struct {
-    Username string `json:"username"`
-    Password  string  `json:"password"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 type UserInfo struct {
-    Name string `json:"name"`
-    Age  int  `json:"age"`
+	Name string `json:"name"`
+	Age  int    `json:"age"`
 }
 
-type Data struct{
+type Data struct {
 	Name string
-	Age int
+	Age  int
 }
-type Ret struct{
-	Code int
+type Ret struct {
+	Code  int
 	Param string
-	Msg string
-	Data []Data
+	Msg   string
+	Data  []Data
 }
+
 /*
 type Request struct {
     Method string
@@ -69,12 +71,10 @@ type Request struct {
     Response *Response
     ctx context.Context
 }
-*/ 
-
-
+*/
 
 func index(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("content-type","text/json")
+	w.Header().Set("content-type", "text/json")
 
 	fmt.Println("请求方法: 		", r.Method)
 	fmt.Println("请求主机: 		", r.Host)
@@ -85,8 +85,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 	// var user User
 	// decoder := json.NewDecoder(r.Body).Decode(&user)
 	// fmt.Println("请求参数: ", decoder, r.Body)
-	
-    body, _ := ioutil.ReadAll(r.Body)
+
+	body, _ := ioutil.ReadAll(r.Body)
 	r.Body.Close()
 	body_str := string(body)
 
@@ -98,8 +98,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal([]byte(body_str), &userInfo)
 	fmt.Printf("请求参数: %v-%v", userInfo.Age, userInfo.Name)
 
-	
-	mysql.InsertRowDemo(userInfo.Name, userInfo.Age)	// 向数据库插入前端传如数据
+	mysql.InsertRowDemo(userInfo.Name, userInfo.Age) // 向数据库插入前端传如数据
 
 	data := Data{Name: userInfo.Name, Age: userInfo.Age}
 	ret := new(Ret)
@@ -110,12 +109,12 @@ func index(w http.ResponseWriter, r *http.Request) {
 	ret.Data = append(ret.Data, data)
 	ret.Data = append(ret.Data, data)
 	ret.Data = append(ret.Data, data)
-	ret_json,_ := json.Marshal(ret)
+	ret_json, _ := json.Marshal(ret)
 	io.WriteString(w, string(ret_json))
 
 }
 func HttpServer() {
 	http.HandleFunc("/post", cors(index))
-	
-    http.ListenAndServe(":9090", nil)
+
+	http.ListenAndServe(":9090", nil)
 }

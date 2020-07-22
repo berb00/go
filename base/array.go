@@ -24,9 +24,9 @@ func DefineUnidimensionalArray() {
 	fmt.Println(arr5)
 
 	/* 数组作为参数传递给函数 */
-	var avg = getAverage( arr1, 5 );
-	fmt.Printf( "平均值为: %f\n ", avg );
-	
+	var avg = getAverage(arr1, 5)
+	fmt.Printf("平均值为: %f\n ", avg)
+
 }
 
 func DefinedMultidimensionedArray() {
@@ -39,8 +39,7 @@ func DefinedMultidimensionedArray() {
 	fmt.Println(arr3)
 }
 
-
-func getAverage(arr [5]int, size int) float32 {	// 函数接收数组
+func getAverage(arr [5]int, size int) float32 { // 函数接收数组
 	var sum int
 	var avg float32
 	for i := 0; i < size; i += 1 {
@@ -48,5 +47,5 @@ func getAverage(arr [5]int, size int) float32 {	// 函数接收数组
 	}
 	avg = float32(sum) / float32(size)
 
-	return avg;
+	return avg
 }
